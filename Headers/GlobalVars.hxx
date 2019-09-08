@@ -1,3 +1,5 @@
+#include <unordered_map>
+
 #include "../SDK/SDK.hxx"
 
 class PlayerVariables{

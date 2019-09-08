@@ -1,6 +1,7 @@
 #include "../../SDK/SDK.hxx"
 #include "Panels.hxx"
 #include "../../SDK/CDrawManager/DrawManager.hxx"
+#include "../../Menu/Menu.hxx"
 
 ScreenSize gScreenSize;
 
@@ -26,6 +27,9 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 		   gInts.Engine->ConIsVisible() || ((GetAsyncKeyState(VK_F12) || gInts.Engine->IsTakingScreenshot()))){
 			return;
 		}
+
+		gMenu.CreateItems();
+		gMenu.Draw();
 
 		gDraw.DrawString((gScreenSize.iScreenWidth / 2) - 55, 200, gDraw.dwGetTeamColor(3),
 						 "Welcome to Darkstorm");

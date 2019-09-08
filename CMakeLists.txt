@@ -4,6 +4,8 @@ project(Fistful_Of_Frags)
 set(CMAKE_CXX_STANDARD 17)
 
 list(APPEND SOURCES
+        Menu/Menu.cxx
+
         Sources/Signature.cxx
         Sources/DLLMain.cxx
 
