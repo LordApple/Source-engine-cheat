@@ -34,8 +34,8 @@ DWORD WINAPI dwMainThread(LPVOID lpArguments){
 		assert(gInts.Surface);
 
 		if(!gInts.Panels){
-			VGUI2Factory = (CreateInterfaceFn) GetProcAddress(gSig.GetModuleHandleSafe("vgui2.dll"),
-															  "CreateInterface");
+			VGUI2Factory = reinterpret_cast<CreateInterfaceFn>(GetProcAddress(gSig.GetModuleHandleSafe("vgui2.dll"),
+																			  "CreateInterface"));
 			gInts.Panels = reinterpret_cast<Panel*>(VGUI2Factory("VGUI_Panel009", nullptr));
 			assert(gInts.Panels);
 
