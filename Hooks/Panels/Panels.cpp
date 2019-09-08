@@ -28,7 +28,7 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 	if(vguiMatSystemTopPanel == vguiPanel) //If we're on MatSystemTopPanel, call our drawing code.
 	{
 		if(gInts.Engine->IsDrawingLoadingImage() || !gInts.Engine->IsInGame() || !gInts.Engine->IsConnected() ||
-		   gInts.Engine->Con_IsVisible() || ((GetAsyncKeyState(VK_F12) || gInts.Engine->IsTakingScreenshot()))){
+		   gInts.Engine->ConIsVisible() || ((GetAsyncKeyState(VK_F12) || gInts.Engine->IsTakingScreenshot()))){
 			return; //We don't want to draw at the menu.
 		}
 
@@ -38,7 +38,7 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 
 		//Test ESP code.
 
-		CBaseEntity* pBaseLocalEnt = gInts.EntList->GetClientEntity(me);  //Grab the local player's entity.
+		BaseEntity* pBaseLocalEnt = gInts.EntList->GetClientEntity(me);  //Grab the local player's entity.
 
 		if(pBaseLocalEnt == NULL) //Always check for null pointers.
 			return;

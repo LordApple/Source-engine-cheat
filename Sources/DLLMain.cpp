@@ -3,7 +3,7 @@
 #include "../Hooks/Panels/Panels.h"
 
 COffsets gOffsets;
-CInterfaces gInts;
+Interfaces gInts;
 
 CreateInterface_t EngineFactory = nullptr;
 CreateInterface_t ClientFactory = nullptr;
@@ -23,9 +23,9 @@ DWORD WINAPI dwMainThread(LPVOID lpArguments){
 				"CreateInterface"));
 
 		gInts.Client = reinterpret_cast<CHLClient*>(ClientFactory("VClient017", nullptr));
-		gInts.EntList = reinterpret_cast<CEntList*>(ClientFactory("VClientEntityList003", nullptr));
+		gInts.EntList = reinterpret_cast<EntList*>(ClientFactory("VClientEntityList003", nullptr));
 		gInts.Engine = reinterpret_cast<EngineClient*>(EngineFactory("VEngineClient013", nullptr));
-		gInts.Surface = reinterpret_cast<ISurface*>(VGUIFactory("VGUI_Surface030", nullptr));
+		gInts.Surface = reinterpret_cast<Surface*>(VGUIFactory("VGUI_Surface030", nullptr));
 
 		assert(gInts.EntList);
 		assert(gInts.Client);
@@ -35,7 +35,7 @@ DWORD WINAPI dwMainThread(LPVOID lpArguments){
 		if(!gInts.Panels){
 			VGUI2Factory = (CreateInterfaceFn) GetProcAddress(gSignatures.GetModuleHandleSafe("vgui2.dll"),
 															  "CreateInterface");
-			gInts.Panels = reinterpret_cast<IPanel*>(VGUI2Factory("VGUI_Panel009", nullptr));
+			gInts.Panels = reinterpret_cast<Panel*>(VGUI2Factory("VGUI_Panel009", nullptr));
 			assert(gInts.Panels);
 
 			if(gInts.Panels){

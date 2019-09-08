@@ -1,13 +1,13 @@
 #include "../../SDK/SDK.h"
 #include "Client.h"
 
-bool __fastcall Hooked_CreateMove(PVOID ClientMode, int edx, float input_sample_frametime, CUserCmd* pCommand){
+bool __fastcall Hooked_CreateMove(PVOID ClientMode, int edx, float input_sample_frametime, UserCmd* pCommand){
 	VMTManager& hook = VMTManager::GetHook(ClientMode);
-	bool bReturn = hook.GetMethod < bool(__thiscall*)(PVOID, float, CUserCmd *) >
+	bool bReturn = hook.GetMethod < bool(__thiscall*)(PVOID, float, UserCmd *) >
 													 (gOffsets.iCreateMoveOffset)(ClientMode, input_sample_frametime,
 																				  pCommand);
 
-	CBaseEntity* pLocal = GetBaseEntity(me);
+	BaseEntity* pLocal = GetBaseEntity(me);
 
 	if(!pLocal){
 		return bReturn;
