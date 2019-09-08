@@ -13,6 +13,10 @@ void Menu::CreateItems() noexcept{
 	this->AddItem("Aimbot", menuItems, &menuVars["AimbotSwitch"], {}, 0, 1, true);
 	this->AddItem("Visuals", menuItems, &menuVars["VisualsSwitch"], {}, 0, 1, true);
 	this->AddItem("Misc", menuItems, &menuVars["MiscSwitch"], {}, 0, 1, true);
+	if(menuVars["MiscSwitch"]){
+		this->AddItem("TestKey", menuItems, &menuVars["MiscTestKey"],
+					  {"Shift", "Mouse1", "Mouse2", "Mouse3", "Mouse4", "Mouse5"});
+	}
 }
 
 void Menu::Draw() const noexcept{

@@ -24,7 +24,7 @@ public:
 			maxVal(t_max){
 		if(!items.empty()){
 			this->minVal = 0;
-			this->maxVal = this->items.size();
+			this->maxVal = this->items.size() - 1;
 		}
 	}
 
@@ -84,7 +84,8 @@ private:
 
 			{"VisualsSwitch", 0},
 
-			{"MiscSwitch",    1},
+			{"MiscSwitch",    0},
+			{"MiscTestKey",   0},
 	};
 
 };
