@@ -6,6 +6,15 @@
 
 Menu gMenu;
 
+void Menu::CreateItems() noexcept{
+	this->items.clear();
+	int menuItems = 1;
+
+	this->AddItem("Aimbot", menuItems, &menuVars["AimbotSwitch"], {}, 0, 1, true);
+	this->AddItem("Visuals", menuItems, &menuVars["VisualsSwitch"], {}, 0, 1, true);
+	this->AddItem("Misc", menuItems, &menuVars["MiscSwitch"], {}, 0, 1, true);
+}
+
 void Menu::Draw() const noexcept{
 	int h = (this->items.size() + 1) * this->menuItemHeight;
 
@@ -37,28 +46,14 @@ void Menu::Draw() const noexcept{
 	}
 }
 
-void
-Menu::AddItem(const std::string& name, int& index, int* value, std::initializer_list<std::string> t_items, int t_min,
-			  int t_max, bool isSwitch) noexcept{
+void Menu::AddItem(const std::string& name, int& index, int* value,
+				   std::initializer_list<std::string> t_items, int t_min, int t_max, bool isSwitch) noexcept{
 	this->items.emplace_back(name, index, value, t_items, t_min, t_max, isSwitch);
 	++index;
 }
 
-void Menu::CreateItems() noexcept{
-	this->items.clear();
-	int menuItems = 1;
-
-	this->AddItem("Aimbot", menuItems, &menuVars["AimbotSwitch"], {}, 0, 1, true);
-	this->AddItem("Visuals", menuItems, &menuVars["VisualsSwitch"], {}, 0, 1, true);
-	this->AddItem("Misc", menuItems, &menuVars["MiscSwitch"], {}, 0, 1, true);
-}
-
 bool Menu::GetActiveState() const noexcept{
 	return this->active;
-}
-
-void Menu::SetActiveState(bool state) noexcept{
-	this->active = state;
 }
 
 size_t Menu::GetItemsSize() const noexcept{
@@ -69,10 +64,6 @@ int Menu::GetCurrentIndex() const noexcept{
 	return this->currentIndex;
 }
 
-void Menu::SetCurrentIndex(const int& index) noexcept{
-	this->currentIndex = index;
-}
-
 int Menu::GetCurrentItemMax() const noexcept{
 	return this->items[this->currentIndex - 1].maxVal;
 }
@@ -81,11 +72,19 @@ int Menu::GetCurrentItemMin() const noexcept{
 	return this->items[this->currentIndex - 1].minVal;
 }
 
-void Menu::SetCurrentItemValue(int value) noexcept{
-	*this->items[this->currentIndex - 1].value = value;
-}
-
 int Menu::GetCurrentItemValue() const noexcept{
 	return *this->items[this->currentIndex - 1].value;
 }
 
+
+void Menu::SetCurrentItemValue(int value) noexcept{
+	*this->items[this->currentIndex - 1].value = value;
+}
+
+void Menu::SetCurrentIndex(const int& index) noexcept{
+	this->currentIndex = index;
+}
+
+void Menu::SetActiveState(bool state) noexcept{
+	this->active = state;
+}
