@@ -4,7 +4,6 @@ project(Fistful_Of_Frags)
 set(CMAKE_CXX_STANDARD 17)
 
 list(APPEND SOURCES
-        Menu/Menu.cxx
         Menu/MenuRewrite.cxx
 
         Sources/Signature.cxx

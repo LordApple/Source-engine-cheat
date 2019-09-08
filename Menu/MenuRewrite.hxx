@@ -13,13 +13,15 @@ public:
 	BaseItem(std::string t_name, int* t_value);
 
 	virtual void RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
-							const int& index) const noexcept;
+							int& index, int& curHeight) const noexcept;
+
+	virtual bool IsSwitch() const noexcept;
 
 // Setters
 public:
 	void SetName(const std::string& t_name) noexcept;
 
-	void SetValue(int* t_value) noexcept;
+	void SetValue(const int& t_value) noexcept;
 
 // Getters
 public:
@@ -34,12 +36,15 @@ private:
 
 class SwitchItem : public BaseItem{
 public:
-	SwitchItem(std::string t_name, int* t_value);
+	SwitchItem(std::string t_name, int* t_value, std::initializer_list<BaseItem*> t_items);
 
 	void RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
-					const int& index) const noexcept override;
+					int& index, int& curHeight) const noexcept override;
+
+	[[nodiscard]] bool IsSwitch() const noexcept override;
 
 private:
+	std::vector<BaseItem*> items;
 };
 
 class Menu{
@@ -50,8 +55,32 @@ public:
 
 	void AddItem(BaseItem* t_item);
 
+// Setters
+public:
+	void SetActiveState(const bool& t_state) noexcept;
+
+	void SetCurrentIndex(const int& t_currentIndex) noexcept;
+
+	void SetCurrentItemValue(int t_value) noexcept;
+
+// Getters
+public:
+	[[nodiscard]] bool GetActiveState() const noexcept;
+
+	[[nodiscard]] int GetCurrentIndex() const noexcept;
+
+	[[nodiscard]] int GetTotalItems() const noexcept;
+
+	[[nodiscard]] int GetCurrentItemValue() const noexcept;
+
 private:
+	bool isActive;
+
 	int menuItemHeight = 15;
+	int currentIndex = 1;
+	int totalItems;
+
+private:
 
 	int x = 300;
 	int y = 50;
