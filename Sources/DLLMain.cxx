@@ -1,6 +1,7 @@
 #include "../SDK/SDK.hxx"
 #include "../Hooks/CreateMove/CreateMove.hxx"
 #include "../Hooks/Panels/Panels.hxx"
+#include "../Hooks/KeyEvent/KeyEvent.hxx"
 
 Offsets gOffsets;
 Interfaces gInts;
@@ -50,7 +51,13 @@ DWORD WINAPI dwMainThread(LPVOID lpArguments){
 		assert(dwClientModeAddress);
 		gInts.ClientMode = **reinterpret_cast<ClientModeShared***>(dwClientModeAddress + 2);
 
+		auto clientHook = new VMTBaseManager();
 		auto clientModeHook = new VMTBaseManager();
+
+		clientHook->Init(gInts.Client);
+		clientHook->HookMethod(&Hooked_KeyEvent, gOffsets.iKeyEventOffset);
+		clientHook->Rehook();
+
 		clientModeHook->Init(gInts.ClientMode);
 		clientModeHook->HookMethod(&Hooked_CreateMove, gOffsets.iCreateMoveOffset);
 		clientModeHook->Rehook();

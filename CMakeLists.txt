@@ -9,6 +9,7 @@ list(APPEND SOURCES
         Sources/Signature.cxx
         Sources/DLLMain.cxx
 
+        Hooks/KeyEvent/KeyEvent.cxx
         Hooks/NetVar/NetVar.cxx
         Hooks/CreateMove/CreateMove.cxx
         Hooks/Panels/Panels.cxx

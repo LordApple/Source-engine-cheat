@@ -15,7 +15,8 @@ public:
 	char chName[34];
 };
 
-class Offsets{
-public:
-	int iCreateMoveOffset = 21, iPaintTraverseOffset = 41;
+struct Offsets{
+	int iKeyEventOffset = 20;
+	int iCreateMoveOffset = 21;
+	int iPaintTraverseOffset = 41;
 };

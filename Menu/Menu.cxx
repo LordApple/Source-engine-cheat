@@ -15,6 +15,11 @@ void Menu::Draw() const noexcept{
 	gDraw.DrawString(this->x + this->w / 2 - 50 / 2, this->y, gDraw.dwGetTeamColor(3), "Darkstorm");
 
 	for(const auto& item : this->items){
+		if(item.index == this->currentIndex && this->active){
+			gDraw.DrawRect(this->x, this->y + this->menuItemHeight * item.index, this->w, this->menuItemHeight,
+						   COLORCODE(255, 255, 255, 150));
+		}
+
 		if(item.isSwitch){
 			gDraw.DrawString(this->x + 5, this->y + this->menuItemHeight * item.index, gDraw.dwGetTeamColor(3), "%s %s",
 							 *item.value ? "-" : "+", item.name.c_str());
@@ -32,9 +37,10 @@ void Menu::Draw() const noexcept{
 	}
 }
 
-void Menu::AddItem(const std::string& name, int& index, int* value, std::initializer_list<std::string> t_items,
-				   bool isSwitch) noexcept{
-	this->items.emplace_back(name, index, value, t_items, isSwitch);
+void
+Menu::AddItem(const std::string& name, int& index, int* value, std::initializer_list<std::string> t_items, int t_min,
+			  int t_max, bool isSwitch) noexcept{
+	this->items.emplace_back(name, index, value, t_items, t_min, t_max, isSwitch);
 	++index;
 }
 
@@ -42,8 +48,44 @@ void Menu::CreateItems() noexcept{
 	this->items.clear();
 	int menuItems = 1;
 
-	this->AddItem("Aimbot", menuItems, &menuVars["AimbotSwitch"], {}, true);
-	this->AddItem("Visuals", menuItems, &menuVars["VisualsSwitch"], {}, true);
-	this->AddItem("Misc", menuItems, &menuVars["MiscSwitch"], {}, true);
+	this->AddItem("Aimbot", menuItems, &menuVars["AimbotSwitch"], {}, 0, 1, true);
+	this->AddItem("Visuals", menuItems, &menuVars["VisualsSwitch"], {}, 0, 1, true);
+	this->AddItem("Misc", menuItems, &menuVars["MiscSwitch"], {}, 0, 1, true);
+}
+
+bool Menu::GetActiveState() const noexcept{
+	return this->active;
+}
+
+void Menu::SetActiveState(bool state) noexcept{
+	this->active = state;
+}
+
+size_t Menu::GetItemsSize() const noexcept{
+	return this->items.size();
+}
+
+int Menu::GetCurrentIndex() const noexcept{
+	return this->currentIndex;
+}
+
+void Menu::SetCurrentIndex(const int& index) noexcept{
+	this->currentIndex = index;
+}
+
+int Menu::GetCurrentItemMax() const noexcept{
+	return this->items[this->currentIndex - 1].maxVal;
+}
+
+int Menu::GetCurrentItemMin() const noexcept{
+	return this->items[this->currentIndex - 1].minVal;
+}
+
+void Menu::SetCurrentItemValue(int value) noexcept{
+	*this->items[this->currentIndex - 1].value = value;
+}
+
+int Menu::GetCurrentItemValue() const noexcept{
+	return *this->items[this->currentIndex - 1].value;
 }
 
