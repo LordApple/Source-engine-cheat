@@ -26,17 +26,17 @@ DWORD WINAPI dwMainThread( LPVOID lpArguments )
 		gInts.Engine = ( EngineClient* ) EngineFactory( "VEngineClient013", NULL );
 		gInts.Surface = ( ISurface* ) VGUIFactory( "VGUI_Surface030", NULL );
 
-		XASSERT(gInts.EntList);
-		XASSERT(gInts.Client);
-		XASSERT(gInts.Engine);
-		XASSERT(gInts.Surface);
+		assert(gInts.EntList);
+		assert(gInts.Client);
+		assert(gInts.Engine);
+		assert(gInts.Surface);
 
 		//Setup the Panel hook so we can draw.
 		if( !gInts.Panels )
 		{
 			VGUI2Factory = (CreateInterfaceFn)GetProcAddress(gSignatures.GetModuleHandleSafe("vgui2.dll"), "CreateInterface");
 			gInts.Panels = ( IPanel* ) VGUI2Factory( "VGUI_Panel009", NULL );
-			XASSERT( gInts.Panels );
+			assert( gInts.Panels );
 
 			if( gInts.Panels )
 			{
@@ -48,9 +48,8 @@ DWORD WINAPI dwMainThread( LPVOID lpArguments )
 		}
 
 		DWORD dwClientModeAddress = gSignatures.GetClientSignature("8B 0D ? ? ? ? 8B 01 5D FF 60 28 CC");
-		XASSERT(dwClientModeAddress);
+		assert(dwClientModeAddress);
 		gInts.ClientMode = **(ClientModeShared***)(dwClientModeAddress + 2);
-		LOGDEBUG("g_pClientModeShared_ptr client.dll+0x%X", (DWORD)gInts.ClientMode - dwClientBase);
 
 		VMTBaseManager* clientModeHook = new VMTBaseManager(); //Setup our VMTBaseManager for ClientMode.
 		clientModeHook->Init(gInts.ClientMode);
@@ -65,7 +64,6 @@ BOOL APIENTRY DllMain(HMODULE hInstance, DWORD dwReason, LPVOID lpReserved)
 	//If you manually map, make sure you setup this function properly.
 	if(dwReason == DLL_PROCESS_ATTACH)
 	{
-		Log::Init(hInstance);
 		CreateThread( NULL, 0, (LPTHREAD_START_ROUTINE)dwMainThread, NULL, 0, NULL ); //CreateThread > _BeginThread. (For what we're doing, of course.)
 	}
 	return true;

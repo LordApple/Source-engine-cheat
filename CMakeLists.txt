@@ -8,7 +8,6 @@ list(APPEND HEADERS
         Headers/CSignature.h
         Headers/dt_common2.h
         Headers/dt_recv2.h
-        Headers/Log.h
         Headers/Vector.h
         Headers/WeaponList.h
 
@@ -23,7 +22,6 @@ list(APPEND HEADERS
 
 list(APPEND SOURCES
         Sources/CSignature.cpp
-        Sources/Log.cpp
         Sources/DLLMain.cpp
 
         Hooks/CreateMove/Client.cpp

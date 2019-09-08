@@ -10,7 +10,6 @@
 #include "../Headers/WeaponList.h"
 #include "../Headers/CGlobalVars.h"
 #include "VMT/VMTHooks.h"
-#include "../Headers/Log.h"
 
 using namespace std;
 
