@@ -1,7 +1,7 @@
 #include "../../SDK/SDK.hxx"
 #include "Panels.hxx"
 #include "../../SDK/CDrawManager/DrawManager.hxx"
-#include "../../Menu/Menu.hxx"
+#include "../../Menu/MenuRewrite.hxx"
 
 ScreenSize gScreenSize;
 
@@ -28,11 +28,11 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 			return;
 		}
 
-		gMenu.CreateItems();
-		gMenu.Draw();
-
 		gDraw.DrawString((gScreenSize.iScreenWidth / 2) - 55, 200, gDraw.dwGetTeamColor(3),
 						 "Welcome to Darkstorm");
+
+		gMenu.PopulateMenu();
+		gMenu.Draw();
 
 		BaseEntity* pLocal = gInts.EntList->GetClientEntity(me);
 

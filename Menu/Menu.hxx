@@ -90,6 +90,6 @@ private:
 
 };
 
-extern Menu gMenu;
+//extern Menu gMenu;
 
 #endif //FISTFUL_OF_FRAGS_MENU_HXX

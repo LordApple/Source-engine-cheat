@@ -4,7 +4,7 @@
 
 #include "Menu.hxx"
 
-Menu gMenu;
+//Menu gMenu;
 
 void Menu::CreateItems() noexcept{
 	this->items.clear();
@@ -34,8 +34,7 @@ void Menu::Draw() const noexcept{
 		}
 
 		if(item.isSwitch){
-			gDraw.DrawString(this->x + 5, this->y + this->menuItemHeight * item.index, gDraw.dwGetTeamColor(3), "%s %s",
-							 *item.value ? "-" : "+", item.name.c_str());
+
 		}else if(item.items.empty()){
 			gDraw.DrawString(this->x + 5, this->y + this->menuItemHeight * item.index, gDraw.dwGetTeamColor(3), "- %s",
 							 item.name.c_str());
