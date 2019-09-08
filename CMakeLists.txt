@@ -4,15 +4,16 @@ project(Fistful_Of_Frags)
 set(CMAKE_CXX_STANDARD 17)
 
 list(APPEND SOURCES
-        Sources/CSignature.cpp
-        Sources/DLLMain.cpp
+        Sources/Signature.cxx
+        Sources/DLLMain.cxx
 
-        Hooks/CreateMove/Client.cpp
-        Hooks/Panels/Panels.cpp
+        Hooks/NetVar/NetVar.cxx
+        Hooks/CreateMove/CreateMove.cxx
+        Hooks/Panels/Panels.cxx
 
         SDK/SDK.cxx
-        SDK/CDrawManager/CDrawManager.cpp
-        SDK/VMT/VMTHooks.cpp
+        SDK/CDrawManager/DrawManager.cxx
+        SDK/VMT/VMTHooks.cxx
         )
 
 add_library(Fistful_Of_Frags SHARED ${SOURCES})

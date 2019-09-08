@@ -1,8 +1,8 @@
-#include "../SDK/SDK.h"
-#include "../Hooks/CreateMove/Client.h"
-#include "../Hooks/Panels/Panels.h"
+#include "../SDK/SDK.hxx"
+#include "../Hooks/CreateMove/CreateMove.hxx"
+#include "../Hooks/Panels/Panels.hxx"
 
-COffsets gOffsets;
+Offsets gOffsets;
 Interfaces gInts;
 
 CreateInterface_t EngineFactory = nullptr;
@@ -13,13 +13,13 @@ CreateInterface_t VGUI2Factory = nullptr;
 DWORD WINAPI dwMainThread(LPVOID lpArguments){
 	if(!gInts.Client){
 		ClientFactory = reinterpret_cast<CreateInterfaceFn>(GetProcAddress(
-				gSignatures.GetModuleHandleSafe("client.dll"),
+				gSig.GetModuleHandleSafe("client.dll"),
 				"CreateInterface"));
 		EngineFactory = reinterpret_cast<CreateInterfaceFn>(GetProcAddress(
-				gSignatures.GetModuleHandleSafe("engine.dll"),
+				gSig.GetModuleHandleSafe("engine.dll"),
 				"CreateInterface"));
 		VGUIFactory = reinterpret_cast<CreateInterfaceFn>(GetProcAddress(
-				gSignatures.GetModuleHandleSafe("vguimatsurface.dll"),
+				gSig.GetModuleHandleSafe("vguimatsurface.dll"),
 				"CreateInterface"));
 
 		gInts.Client = reinterpret_cast<CHLClient*>(ClientFactory("VClient017", nullptr));
@@ -33,7 +33,7 @@ DWORD WINAPI dwMainThread(LPVOID lpArguments){
 		assert(gInts.Surface);
 
 		if(!gInts.Panels){
-			VGUI2Factory = (CreateInterfaceFn) GetProcAddress(gSignatures.GetModuleHandleSafe("vgui2.dll"),
+			VGUI2Factory = (CreateInterfaceFn) GetProcAddress(gSig.GetModuleHandleSafe("vgui2.dll"),
 															  "CreateInterface");
 			gInts.Panels = reinterpret_cast<Panel*>(VGUI2Factory("VGUI_Panel009", nullptr));
 			assert(gInts.Panels);
@@ -46,7 +46,7 @@ DWORD WINAPI dwMainThread(LPVOID lpArguments){
 			}
 		}
 
-		DWORD dwClientModeAddress = gSignatures.GetClientSignature("8B 0D ? ? ? ? 8B 01 5D FF 60 28 CC");
+		DWORD dwClientModeAddress = gSig.GetClientSignature("8B 0D ? ? ? ? 8B 01 5D FF 60 28 CC");
 		assert(dwClientModeAddress);
 		gInts.ClientMode = **reinterpret_cast<ClientModeShared***>(dwClientModeAddress + 2);
 

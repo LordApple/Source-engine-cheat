@@ -5,9 +5,9 @@ typedef struct CScreenSize_t
 	int iScreenHeight;
 	int iScreenWidth;
 
-} CScreenSize;
+} ScreenSize;
 
 void __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, bool forceRepaint, bool allowForce);
 void Intro();
 
-extern CScreenSize gScreenSize;
+extern ScreenSize gScreenSize;

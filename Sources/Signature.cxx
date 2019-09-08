@@ -1,11 +1,11 @@
-#include "../SDK/SDK.h"
+#include "../SDK/SDK.hxx"
 #include <time.h>
 
 #define INRANGE(x,a,b)    (x >= a && x <= b) 
 #define getBits( x )    (INRANGE((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (INRANGE(x,'0','9') ? x - '0' : 0))
 #define getByte( x )    (getBits(x[0]) << 4 | getBits(x[1]))
 
-DWORD CSignature::dwFindPattern(DWORD dwAddress, DWORD dwLength, const char* szPattern)
+DWORD Signature::dwFindPattern(DWORD dwAddress, DWORD dwLength, const char* szPattern)
 {
 	const char* pat = szPattern;
 	DWORD firstMatch = NULL;
@@ -26,7 +26,7 @@ DWORD CSignature::dwFindPattern(DWORD dwAddress, DWORD dwLength, const char* szP
 	return NULL;
 }
 //===================================================================================
-HMODULE CSignature::GetModuleHandleSafe( const char* pszModuleName )
+HMODULE Signature::GetModuleHandleSafe(const char* pszModuleName )
 {
 	HMODULE hmModuleHandle = NULL;
 
@@ -40,7 +40,7 @@ HMODULE CSignature::GetModuleHandleSafe( const char* pszModuleName )
 	return hmModuleHandle;
 }
 //===================================================================================
-DWORD CSignature::GetClientSignature(char* chPattern)
+DWORD Signature::GetClientSignature(char* chPattern)
 {
 	static HMODULE hmModule = GetModuleHandleSafe("client.dll");
 	static PIMAGE_DOS_HEADER pDOSHeader = (PIMAGE_DOS_HEADER)hmModule;
@@ -48,7 +48,7 @@ DWORD CSignature::GetClientSignature(char* chPattern)
 	return dwFindPattern(((DWORD)hmModule) + pNTHeaders->OptionalHeader.BaseOfCode, ((DWORD)hmModule) + pNTHeaders->OptionalHeader.SizeOfCode, chPattern);
 }
 //===================================================================================
-DWORD CSignature::GetEngineSignature(char* chPattern)
+DWORD Signature::GetEngineSignature(char* chPattern)
 {
 	static HMODULE hmModule = GetModuleHandleSafe("engine.dll");
 	static PIMAGE_DOS_HEADER pDOSHeader = (PIMAGE_DOS_HEADER)hmModule;
@@ -56,4 +56,4 @@ DWORD CSignature::GetEngineSignature(char* chPattern)
 	return dwFindPattern(((DWORD)hmModule) + pNTHeaders->OptionalHeader.BaseOfCode, ((DWORD)hmModule) + pNTHeaders->OptionalHeader.SizeOfCode, chPattern);
 }
 
-CSignature gSignatures;
+Signature gSig;

@@ -1,7 +1,6 @@
-#include "../SDK/SDK.h"
+#include "../SDK/SDK.hxx"
 
-class CPlayerVariables
-{
+class PlayerVariables{
 public:
 	int iWeaponID;
 	bool bHasMeleeWeapon;
@@ -14,8 +13,7 @@ public:
 	char chName[34];
 };
 
-class COffsets
-{
+class Offsets{
 public:
 	int iCreateMoveOffset = 21, iPaintTraverseOffset = 41;
 };

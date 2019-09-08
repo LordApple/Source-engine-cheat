@@ -3,13 +3,16 @@
 #include <Windows.h>
 #include <math.h>
 #include <xstring>
-#include "../Headers/Vector.h"
-#include "VMT/getvfunc.h"
-#include "../Headers/dt_recv2.h"
-#include "../Headers/CSignature.h"
-#include "../Headers/WeaponList.h"
-#include "../Headers/CGlobalVars.h"
-#include "VMT/VMTHooks.h"
+
+#include "../Headers/Vector.hxx"
+#include "../Headers/dt_recv2.hxx"
+#include "../Headers/Signature.hxx"
+#include "../Headers/GlobalVars.hxx"
+
+#include "../Hooks/NetVar/NetVar.hxx"
+
+#include "VMT/VMTHooks.hxx"
+#include "VMT/getvfunc.hxx"
 
 typedef void* ( __cdecl* CreateInterface_t )(const char*, int*);
 
@@ -150,6 +153,8 @@ public:
 
 	int GetIndex() noexcept;
 
+	int GetFlags() noexcept;
+
 	void GetRenderBounds(Vector& minS, Vector& maxS) noexcept;
 };
 
@@ -240,5 +245,5 @@ public:
 };
 
 extern Interfaces gInts;
-extern CPlayerVariables gPlayerVars;
-extern COffsets gOffsets;
+extern PlayerVariables gPlayerVars;
+extern Offsets gOffsets;

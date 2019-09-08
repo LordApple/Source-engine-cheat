@@ -2,7 +2,7 @@
 // Created by Apple on 08/09/2019.
 //
 
-#include "SDK.h"
+#include "SDK.hxx"
 
 ClientClass* CHLClient::GetAllClasses() noexcept{
 	typedef ClientClass* ( __thiscall* OriginalFn )(PVOID);
@@ -60,6 +60,10 @@ void BaseEntity::GetRenderBounds(Vector& minS, Vector& maxS) noexcept{
 	auto pRenderable = reinterpret_cast<PVOID>(this + 0x4);
 	typedef void ( __thiscall* OriginalFn )(PVOID, Vector&, Vector&);
 	getvfunc<OriginalFn>(pRenderable, 20)(pRenderable, minS, maxS);
+}
+
+int BaseEntity::GetFlags() noexcept{
+	DYNVAR_RETURN(int, this, "DT_BasePlayer", "m_fFlags");
 }
 
 
