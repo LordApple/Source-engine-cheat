@@ -41,15 +41,24 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 		}
 
 
-		for(int x = 0; x < gInts.Engine->GetMaxClients(); ++x){
+		for(int x = 1; x < gInts.Engine->GetMaxClients(); ++x){
 			if(x == me){
 				continue;
 			}
 
 			BaseEntity* pEntity = GetBaseEntity(x);
 
-			if(!pEntity || pEntity->IsDormant() ||
-			   pEntity->GetLifeState() != static_cast<BYTE>(SourceLifeStates::LIFE_ALIVE)){
+			if(!pEntity){
+				continue;
+			}
+
+			int OBSMode = pEntity->GetObserverMode();
+			if(OBSMode == static_cast<int>(OBSMODES::OBS_MODE_DEATHCAM) ||
+			   OBSMode == static_cast<int>(OBSMODES::OBS_MODE_IN_EYE) ||
+			   OBSMode == static_cast<int>(OBSMODES::OBS_MODE_CHASE)){
+			}
+
+			if(pEntity->IsDormant() || pEntity->GetLifeState() != static_cast<BYTE>(SourceLifeStates::LIFE_ALIVE)){
 				continue;
 			}
 
@@ -58,6 +67,8 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 			pEntity->GetWorldSpaceCenter(vecWorld);
 
 			if(gDraw.WorldToScreen(vecWorld, vecScreen)){
+				gInts.Surface->DrawLine(vecScreen.x, vecScreen.y, gScreenSize.iScreenWidth / 2,
+										gScreenSize.iScreenHeight / 2);
 				gDraw.DrawString(vecScreen.x, vecScreen.y, 0xFFFFFFFF, "Player");
 			}
 		}

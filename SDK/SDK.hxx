@@ -44,6 +44,19 @@ typedef float matrix3x4[3][4];
 #define BLU_TEAM 3
 #define RED_TEAM 2
 
+enum class OBSMODES{
+	OBS_MODE_NONE = 0,    // not in spectator mode
+	OBS_MODE_DEATHCAM,    // special mode for death cam animation
+	OBS_MODE_FREEZECAM,    // zooms to a target, and freeze-frames on them
+	OBS_MODE_FIXED,        // view from a fixed camera position
+	OBS_MODE_IN_EYE,    // follow a player in first person view
+	OBS_MODE_CHASE,        // follow a player in third person view
+	OBS_MODE_POI,        // PASSTIME point of interest - game objective, big fight, anything interesting; added in the middle of the enum due to tons of hard-coded "<ROAMING" enum compares
+	OBS_MODE_ROAMING,    // free roaming
+
+	NUM_OBSERVER_MODES,
+};
+
 enum class PlayerControls{
 	IN_ATTACK = (1 << 0),
 	IN_JUMP = (1 << 1),
@@ -280,6 +293,10 @@ public:
 
 	int GetFlags() noexcept;
 
+	int GetObserverMode() noexcept;
+
+	int GetObserverTarget() noexcept;
+
 	BYTE GetLifeState() noexcept;
 
 	void GetRenderBounds(Vector& minS, Vector& maxS) noexcept;
@@ -338,6 +355,8 @@ public:
 	void DrawSetTextPos(int x, int y) noexcept;
 
 	void DrawPrintText(const wchar_t* text, int textLen) noexcept;
+
+	void DrawLine(int x0, int y0, int x1, int y1) noexcept;
 
 	unsigned long CreateFont() noexcept;
 

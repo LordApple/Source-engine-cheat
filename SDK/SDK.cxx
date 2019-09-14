@@ -44,6 +44,14 @@ ClientClass* BaseEntity::GetClientClass() noexcept{
 	return getvfunc<OriginalFn>(pNetworkable, 2)(pNetworkable);
 }
 
+int BaseEntity::GetObserverMode() noexcept{
+	DYNVAR_RETURN(int, this, "DT_BasePlayer", "m_iObserverMode");
+}
+
+int BaseEntity::GetObserverTarget() noexcept{
+	DYNVAR_RETURN(int, this, "DT_BasePlayer", "m_hObserverTarget");
+}
+
 bool BaseEntity::IsDormant() noexcept{
 	auto pNetworkable = reinterpret_cast<PVOID>(this + 0x8);
 	typedef bool ( __thiscall* OriginalFn )(PVOID);
@@ -201,6 +209,11 @@ void Surface::SetFontGlyphSet(unsigned long& font, const char* windowsFontName, 
 void Surface::GetTextSize(unsigned long font, const wchar_t* text, int& wide, int& tall) noexcept{
 	typedef void(__thiscall* OriginalFn)(PVOID, unsigned long, const wchar_t*, int&, int&);
 	getvfunc<OriginalFn>(this, 75)(this, font, text, wide, tall);
+}
+
+void Surface::DrawLine(int x0, int y0, int x1, int y1) noexcept{
+	typedef void(__thiscall* DrawLineFn)(void*, int, int, int, int);
+	getvfunc<DrawLineFn>(this, 15)(this, x0, y0, x1, y1);
 }
 
 BaseEntity* EntList::GetClientEntity(int entNum) noexcept{
