@@ -29,28 +29,14 @@ void Menu::Draw(){
 }
 
 void Menu::PopulateMenu(){
-	if(!this->menuItems.empty()){
-		for(auto& item : this->menuItems){
-			delete item;
-		}
-		this->menuItems.clear();
-	}
+	this->menuItems.clear();
 
-	this->AddItem(new SwitchItem("Aimbot", &testValue, {
-			new BoolItem("Enabled", &testValue),
-	}));
-	this->AddItem(new SwitchItem("Visuals", &testValue, {
-			new BoolItem("Enabled", &testValue),
-	}));
-	this->AddItem(new SwitchItem("Misc", &testValue2, {
-			new BoolItem("Enabled", &testValue3),
-			new SwitchItem("Options", &testValue4, {
-					new BoolItem("Ignore Shit", &testValue3),
-			}),
-	}));
+	this->AddItem(std::make_shared<SwitchItem>(SwitchItem("Aimbot", &testValue2, {
+			std::make_shared<BoolItem>(BoolItem("Enabled", &testValue)),
+	})));
 }
 
-void Menu::AddItem(BoolItem* t_item){
+void Menu::AddItem(const std::shared_ptr<BoolItem>& t_item){
 	this->menuItems.push_back(t_item);
 }
 

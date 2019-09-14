@@ -4,7 +4,8 @@
 
 #include "SwitchItem.hxx"
 
-SwitchItem::SwitchItem(std::string t_name, int* t_value, std::initializer_list<BoolItem*> t_items) : BoolItem(
+SwitchItem::SwitchItem(std::string t_name, int* t_value, std::initializer_list<std::shared_ptr<BoolItem>> t_items)
+		: BoolItem(
 		std::move(t_name), t_value), items(t_items){}
 
 void SwitchItem::RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,

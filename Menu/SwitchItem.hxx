@@ -14,7 +14,7 @@
 
 class SwitchItem : public BoolItem{
 public:
-	SwitchItem(std::string t_name, int* t_value, std::initializer_list<BoolItem*> t_items);
+	SwitchItem(std::string t_name, int* t_value, std::initializer_list<std::shared_ptr<BoolItem>> t_items);
 
 	void RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
 					int& index, int& curHeight) const noexcept override;
@@ -22,7 +22,7 @@ public:
 	[[nodiscard]] bool IsSwitch() const noexcept override;
 
 private:
-	std::vector<BoolItem*> items;
+	std::vector<std::shared_ptr<BoolItem>> items;
 };
 
 #endif //FISTFUL_OF_FRAGS_SWITCHITEM_HXX

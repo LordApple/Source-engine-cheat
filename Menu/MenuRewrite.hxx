@@ -17,9 +17,9 @@ public:
 
 	void PopulateMenu();
 
-	void AddItem(BoolItem* t_item);
+	void AddItem(const std::shared_ptr<BoolItem>& t_item);
 
-// Setters
+// Sette&rs
 public:
 	void SetActiveState(const bool& t_state) noexcept;
 
@@ -50,7 +50,7 @@ private:
 	int y = 50;
 	int w = 200;
 
-	std::vector<BoolItem*> menuItems{};
+	std::vector<std::shared_ptr<BoolItem>> menuItems{};
 };
 
 extern Menu gMenu;
