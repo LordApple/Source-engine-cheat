@@ -8,8 +8,6 @@ Menu gMenu;
 
 int testValue = 0;
 int testValue2 = 1;
-int testValue3 = 0;
-int testValue4 = 1;
 
 void Menu::Draw(){
 	int index = 1;
@@ -31,7 +29,7 @@ void Menu::Draw(){
 void Menu::PopulateMenu(){
 	this->menuItems.clear();
 
-	this->AddItem(std::make_shared<SwitchItem>(SwitchItem("Aimbot", &testValue2, {
+	this->AddItem(std::make_shared<SwitchItem>(SwitchItem("ESP", &testValue2, {
 			std::make_shared<BoolItem>(BoolItem("Enabled", &testValue)),
 	})));
 }

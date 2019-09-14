@@ -36,15 +36,30 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 
 		BaseEntity* pLocal = gInts.EntList->GetClientEntity(me);
 
-		if(!pLocal)
+		if(!pLocal){
 			return;
+		}
 
-		Vector vecWorld, vecScreen;
 
-		pLocal->GetWorldSpaceCenter(vecWorld);
+		for(int x = 0; x < gInts.Engine->GetMaxClients(); ++x){
+			if(x == me){
+				continue;
+			}
 
-		if(gDraw.WorldToScreen(vecWorld, vecScreen)){
-			gDraw.DrawString(vecScreen.x, vecScreen.y, 0xFFFFFFFF, "You");
+			BaseEntity* pEntity = GetBaseEntity(x);
+
+			if(!pEntity || pEntity->IsDormant() ||
+			   pEntity->GetLifeState() != static_cast<BYTE>(SourceLifeStates::LIFE_ALIVE)){
+				continue;
+			}
+
+			Vector vecWorld, vecScreen;
+
+			pEntity->GetWorldSpaceCenter(vecWorld);
+
+			if(gDraw.WorldToScreen(vecWorld, vecScreen)){
+				gDraw.DrawString(vecScreen.x, vecScreen.y, 0xFFFFFFFF, "Player");
+			}
 		}
 	}
 }

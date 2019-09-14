@@ -66,6 +66,10 @@ int BaseEntity::GetFlags() noexcept{
 	DYNVAR_RETURN(int, this, "DT_BasePlayer", "m_fFlags");
 }
 
+BYTE BaseEntity::GetLifeState() noexcept{
+	DYNVAR_RETURN(BYTE, this, "DT_BasePlayer", "m_lifeState");
+}
+
 
 void EngineClient::GetScreenSize(int& width, int& height) noexcept{
 	typedef void ( __thiscall* OriginalFn )(PVOID, int&, int&);

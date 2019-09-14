@@ -280,6 +280,8 @@ public:
 
 	int GetFlags() noexcept;
 
+	BYTE GetLifeState() noexcept;
+
 	void GetRenderBounds(Vector& minS, Vector& maxS) noexcept;
 };
 
