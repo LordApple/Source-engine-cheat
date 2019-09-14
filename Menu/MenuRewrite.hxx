@@ -8,44 +8,8 @@
 #include "../SDK/SDK.hxx"
 #include "../SDK/CDrawManager/DrawManager.hxx"
 
-class BaseItem{
-public:
-	BaseItem(std::string t_name, int* t_value);
-
-	virtual void RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
-							int& index, int& curHeight) const noexcept;
-
-	virtual bool IsSwitch() const noexcept;
-
-// Setters
-public:
-	void SetName(const std::string& t_name) noexcept;
-
-	void SetValue(const int& t_value) noexcept;
-
-// Getters
-public:
-	[[nodiscard]] std::string GetName() const noexcept;
-
-	[[nodiscard]] int GetValue() const noexcept;
-
-private:
-	std::string name;
-	int* value;
-};
-
-class SwitchItem : public BaseItem{
-public:
-	SwitchItem(std::string t_name, int* t_value, std::initializer_list<BaseItem*> t_items);
-
-	void RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
-					int& index, int& curHeight) const noexcept override;
-
-	[[nodiscard]] bool IsSwitch() const noexcept override;
-
-private:
-	std::vector<BaseItem*> items;
-};
+#include "BoolItem.hxx"
+#include "SwitchItem.hxx"
 
 class Menu{
 public:
@@ -53,7 +17,7 @@ public:
 
 	void PopulateMenu();
 
-	void AddItem(BaseItem* t_item);
+	void AddItem(BoolItem* t_item);
 
 // Setters
 public:
@@ -86,7 +50,7 @@ private:
 	int y = 50;
 	int w = 200;
 
-	std::vector<BaseItem*> menuItems{};
+	std::vector<BoolItem*> menuItems{};
 };
 
 extern Menu gMenu;

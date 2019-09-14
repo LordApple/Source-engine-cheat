@@ -189,20 +189,20 @@ int __fastcall Hooked_KeyEvent(PVOID CHLClient, int edx, InputEventType eventCod
 				break;
 			case ButtonCode::KEY_APP:
 				break;
-			case ButtonCode::KEY_UP:
-				if(gMenu.GetCurrentIndex() - 1 < 1){
-					gMenu.SetCurrentIndex(gMenu.GetTotalItems());
-				}else{
-					gMenu.SetCurrentIndex(gMenu.GetCurrentIndex() - 1);
-				}
-				break;
-			case ButtonCode::KEY_DOWN:
-				if(gMenu.GetCurrentIndex() + 1 > gMenu.GetTotalItems()){
-					gMenu.SetCurrentIndex(1);
-				}else{
-					gMenu.SetCurrentIndex(gMenu.GetCurrentIndex() + 1);
-				}
-				break;
+//			case ButtonCode::KEY_UP:
+//				if(gMenu.GetCurrentIndex() - 1 < 1){
+//					gMenu.SetCurrentIndex(gMenu.GetTotalItems());
+//				}else{
+//					gMenu.SetCurrentIndex(gMenu.GetCurrentIndex() - 1);
+//				}
+//				break;
+//			case ButtonCode::KEY_DOWN:
+//				if(gMenu.GetCurrentIndex() + 1 > gMenu.GetTotalItems()){
+//					gMenu.SetCurrentIndex(1);
+//				}else{
+//					gMenu.SetCurrentIndex(gMenu.GetCurrentIndex() + 1);
+//				}
+//				break;
 //			case ButtonCode::KEY_RIGHT:
 //				if(gMenu.GetCurrentItemValue() + 1 > gMenu.GetCurrentItemMax()){
 //					gMenu.SetCurrentItemValue(0);

@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 list(APPEND SOURCES
         Menu/MenuRewrite.cxx
+        Menu/BoolItem.cxx
+        Menu/SwitchItem.cxx
 
         Sources/Signature.cxx
         Sources/DLLMain.cxx

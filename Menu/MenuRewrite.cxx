@@ -11,71 +11,6 @@ int testValue2 = 1;
 int testValue3 = 0;
 int testValue4 = 1;
 
-BaseItem::BaseItem(std::string t_name, int* t_value) : name(std::move(t_name)), value(t_value){}
-
-void BaseItem::RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
-						  int& index, int& curHeight) const noexcept{
-
-	// This could be it's own function
-	if(index == gMenu.GetCurrentIndex() && gMenu.GetActiveState()){
-		gDraw.DrawRect(menuX, menuY + itemHeight * index, menuW, itemHeight,
-					   COLORCODE(255, 255, 255, 150));
-	}
-
-	curHeight += itemHeight;
-	gDraw.DrawString(menuX + 5, menuY + itemHeight * index, gDraw.dwGetTeamColor(3), "- %s", this->GetName().c_str());
-	gDraw.DrawString(menuX + menuW - 35, menuY + itemHeight * index, gDraw.dwGetTeamColor(3),
-					 this->GetValue() ? "ON" : "OFF");
-}
-
-void BaseItem::SetName(const std::string& t_name) noexcept{
-	this->name = t_name;
-}
-
-void BaseItem::SetValue(const int& t_value) noexcept{
-	*this->value = t_value;
-}
-
-std::string BaseItem::GetName() const noexcept{
-	return this->name;
-}
-
-int BaseItem::GetValue() const noexcept{
-	return *this->value;
-}
-
-bool BaseItem::IsSwitch() const noexcept{
-	return false;
-}
-
-SwitchItem::SwitchItem(std::string t_name, int* t_value, std::initializer_list<BaseItem*> t_items) : BaseItem(
-		std::move(t_name), t_value), items(t_items){}
-
-void SwitchItem::RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
-							int& index, int& curHeight) const noexcept{
-
-
-	if(index == gMenu.GetCurrentIndex() && gMenu.GetActiveState()){
-		gDraw.DrawRect(menuX, menuY + itemHeight * index, menuW, itemHeight,
-					   COLORCODE(255, 255, 255, 150));
-	}
-
-	curHeight += itemHeight;
-	gDraw.DrawString(menuX + 5, menuY + itemHeight * index, gDraw.dwGetTeamColor(3), "%s %s",
-					 this->GetValue() ? "-" : "+", this->GetName().c_str());
-
-	if(this->GetValue()){
-		for(const auto& item : this->items){
-			++index;
-			item->RenderItem(menuX, menuY, menuW, itemHeight, index, curHeight);
-		}
-	}
-}
-
-bool SwitchItem::IsSwitch() const noexcept{
-	return true;
-}
-
 void Menu::Draw(){
 	int index = 1;
 
@@ -102,20 +37,20 @@ void Menu::PopulateMenu(){
 	}
 
 	this->AddItem(new SwitchItem("Aimbot", &testValue, {
-			new BaseItem("Enabled", &testValue),
+			new BoolItem("Enabled", &testValue),
 	}));
 	this->AddItem(new SwitchItem("Visuals", &testValue, {
-			new BaseItem("Enabled", &testValue),
+			new BoolItem("Enabled", &testValue),
 	}));
 	this->AddItem(new SwitchItem("Misc", &testValue2, {
-			new BaseItem("Enabled", &testValue3),
+			new BoolItem("Enabled", &testValue3),
 			new SwitchItem("Options", &testValue4, {
-					new BaseItem("Ignore Shit", &testValue3),
+					new BoolItem("Ignore Shit", &testValue3),
 			}),
 	}));
 }
 
-void Menu::AddItem(BaseItem* t_item){
+void Menu::AddItem(BoolItem* t_item){
 	this->menuItems.push_back(t_item);
 }
 
