@@ -19,7 +19,7 @@ public:
 
 	void AddItem(const std::shared_ptr<BoolItem>& t_item);
 
-// Sette&rs
+// Setters
 public:
 	void SetActiveState(const bool& t_state) noexcept;
 

@@ -4,7 +4,7 @@
 
 #include "BoolItem.hxx"
 
-BoolItem::BoolItem(std::string t_name, int* t_value) : name(std::move(t_name)), value(t_value){}
+BoolItem::BoolItem(std::string t_name, int* t_value) noexcept : name(std::move(t_name)), value(t_value){}
 
 void BoolItem::RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
 						  int& index, int& curHeight) const noexcept{

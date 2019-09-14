@@ -12,8 +12,8 @@
 
 class BoolItem{
 public:
-	BoolItem(std::string t_name, int* t_value);
-
+	BoolItem(std::string t_name, int* t_value) noexcept;
+	
 	virtual void RenderItem(const int& menuX, const int& menuY, const int& menuW, const int& itemHeight,
 							int& index, int& curHeight) const noexcept;
 
