@@ -27,6 +27,8 @@ public:
 
 	void DrawRect(int x, int y, int w, int h, DWORD dwColor);
 
+	void DrawLine(int x, int y, int x1, int y2, DWORD dwColor) const noexcept;
+
 	void OutlineRect(int x, int y, int w, int h, DWORD dwColor);
 
 	bool WorldToScreen(Vector& vOrigin, Vector& vScreen);

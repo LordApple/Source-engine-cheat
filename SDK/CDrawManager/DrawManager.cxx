@@ -23,6 +23,11 @@ void DrawManager::DrawString(int x, int y, DWORD dwColor, const wchar_t* pszText
 	gInts.Surface->DrawPrintText(pszText, wcslen(pszText));
 }
 
+void DrawManager::DrawLine(int x, int y, int x1, int y1, DWORD dwColor) const noexcept{
+	gInts.Surface->DrawSetColor(RED(dwColor), GREEN(dwColor), BLUE(dwColor), ALPHA(dwColor));
+	gInts.Surface->DrawLine(x, y, x1, y1);
+}
+
 void DrawManager::DrawString(int x, int y, DWORD dwColor, const char* pszText, ...){
 	if(pszText == NULL)
 		return;

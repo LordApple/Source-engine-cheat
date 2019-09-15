@@ -41,6 +41,8 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 		}
 
 
+		gSpec.ClearPlayers();
+
 		for(int x = 1; x < gInts.Engine->GetMaxClients(); ++x){
 			if(x == me){
 				continue;
@@ -48,17 +50,26 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 
 			BaseEntity* pEntity = GetBaseEntity(x);
 
-			if(!pEntity){
+			if(!pEntity || pEntity->IsDormant()){
 				continue;
 			}
 
-			int OBSMode = pEntity->GetObserverMode();
-			if(OBSMode == static_cast<int>(OBSMODES::OBS_MODE_DEATHCAM) ||
-			   OBSMode == static_cast<int>(OBSMODES::OBS_MODE_IN_EYE) ||
-			   OBSMode == static_cast<int>(OBSMODES::OBS_MODE_CHASE)){
+			int obsMode = pEntity->GetObserverMode();
+			int obsTarget = pEntity->GetObserverTarget();
+
+			BaseEntity* pTarget = gInts.EntList->GetClientEntityFromHandle(obsTarget);
+
+			if(pTarget && ((obsMode == static_cast<int>(OBSMODES::OBS_MODE_DEATHCAM) ||
+							obsMode == static_cast<int>(OBSMODES::OBS_MODE_IN_EYE) ||
+							obsMode == static_cast<int>(OBSMODES::OBS_MODE_FREEZECAM) ||
+							obsMode == static_cast<int>(OBSMODES::OBS_MODE_CHASE)) && pTarget == pLocal)){
+				PlayerInfo pInfo{};
+				gInts.Engine->GetPlayerInfo(pEntity->GetIndex(), &pInfo);
+				auto mode = static_cast<OBSMODES>(obsMode);
+				gSpec.AddPlayer(pInfo.name, mode);
 			}
 
-			if(pEntity->IsDormant() || pEntity->GetLifeState() != static_cast<BYTE>(SourceLifeStates::LIFE_ALIVE)){
+			if(pEntity->GetLifeState() != static_cast<BYTE>(SourceLifeStates::LIFE_ALIVE)){
 				continue;
 			}
 
@@ -67,11 +78,13 @@ __fastcall Hooked_PaintTraverse(PVOID pPanels, int edx, unsigned int vguiPanel, 
 			pEntity->GetWorldSpaceCenter(vecWorld);
 
 			if(gDraw.WorldToScreen(vecWorld, vecScreen)){
-				gInts.Surface->DrawLine(vecScreen.x, vecScreen.y, gScreenSize.iScreenWidth / 2,
-										gScreenSize.iScreenHeight / 2);
+				gDraw.DrawLine(vecScreen.x, vecScreen.y, gScreenSize.iScreenWidth / 2,
+							   gScreenSize.iScreenHeight / 2, COLORCODE(0, 0, 0, 255));
 				gDraw.DrawString(vecScreen.x, vecScreen.y, 0xFFFFFFFF, "Player");
 			}
 		}
+
+		gSpec.Render();
 	}
 }
 

@@ -8,6 +8,8 @@ list(APPEND SOURCES
         Menu/BoolItem.cxx
         Menu/SwitchItem.cxx
 
+        Features/SpecList/SpecList.cxx
+
         Sources/Signature.cxx
         Sources/DLLMain.cxx
 
